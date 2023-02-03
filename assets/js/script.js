@@ -1,6 +1,6 @@
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
-// in the html.
+// in the html
 
 $( function(){
   //Declare variables for Elements to edit, current day and hour, and get tasks from localstorage or create and set new localstorage item if it doesn't exist.
