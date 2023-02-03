@@ -15,6 +15,9 @@ if(!tasks){
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+var hourTest = dayjs().hour(9);
+console.log(hourTest.format('ha'));
+
 setInterval(function(){
   today = dayjs();
   console.log('hour variable: '+currentHour + '\nactual hour: ' +parseInt(today.format('H')));
@@ -28,41 +31,28 @@ setInterval(function(){
 currentDayEl.text(today.format('dddd, MMMM Do'));
 
 function loadSchedule(){
-  var hour = 9;
-  var ampm;
-  for (i=0; i<9; i++){
-    if(hour > 12){
-      var hourProper = hour-12;
-      ampm = "PM";
-    } else if (hour ==12){
-      hourProper = hour;
-      ampm = "PM";
-    } else {
-      hourProper = hour;
-      ampm = "AM";
-    }
+  for (i=9; i<18; i++){
+    var hour = dayjs().hour(i);
 
-    var timeBlock = $('<div id='+hour+' class="row time-block">');
+    var timeBlock = $('<div id='+i+' class="row time-block">');
     var blockTitle = $('<div class="col-2 col-md-1 hour text-center py-3">');
     var blockTextArea = $('<textarea class="col-8 col-md-10 description" rows="3">');
     var blockButton = $('<button class="btn saveBtn col-2 col-md-1" aria-label="save">');
     blockButton.append('<i class="fas fa-save" aria-hidden="true"></i>');
 
-    blockTextArea.text(tasks[hour]);
+    blockTextArea.text(tasks[i]);
 
-    if(hour < currentHour) {
+    if(i < currentHour) {
       timeBlock.addClass('past');
-    } else if (hour == currentHour){
+    } else if (i == currentHour){
       timeBlock.addClass('present');
     } else {
       timeBlock.addClass('future');
     }
 
-    blockTitle.text(hourProper.toString()+ampm);
+    blockTitle.text(hour.format('hA'));
     timeBlock.append(blockTitle, blockTextArea, blockButton);
     scheduleEl.append(timeBlock);
-
-    hour++;
   }
 
 }
